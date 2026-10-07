@@ -2,7 +2,7 @@ import { createHash, randomBytes } from "node:crypto"
 import { createServer } from "node:http"
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent"
 
-const LEE_URL = process.env.LEE_URL ?? "https://localhost:8799"
+const LEE_URL = process.env.LEE_URL ?? "https://lee.coey.dev"
 const CALLBACK_PORT = 53682
 const REDIRECT_URI = `http://127.0.0.1:${CALLBACK_PORT}/callback`
 const SCOPE = "lee:read"

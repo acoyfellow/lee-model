@@ -1,0 +1,66 @@
+{
+  "schema": "guardrail.deploy-receipt.v0",
+  "timestamp": "2026-10-07T20:30:26.131Z",
+  "command": [
+    "guardrail",
+    "receipt",
+    "./.guardrail-staged.15329.wrangler.jsonc"
+  ],
+  "configPath": "./.guardrail-staged.15329.wrangler.jsonc",
+  "git": {
+    "sha": "9208e5cfe557451dd18d007424fdbd5bdf8a39b6",
+    "dirty": true,
+    "remote": "https://github.com/acoyfellow/lee-model.git"
+  },
+  "decision": {
+    "allowed": false,
+    "findings": [
+      {
+        "severity": "CRITICAL",
+        "message": "Worker is attached to custom route lee.coey.dev/* with sensitive bindings"
+      },
+      {
+        "severity": "CRITICAL",
+        "message": "ai binding \"AI\" exposed on custom route lee.coey.dev/*"
+      },
+      {
+        "severity": "WARNING",
+        "message": "kv_namespace binding \"OAUTH_KV\" exposed on custom route lee.coey.dev/*"
+      },
+      {
+        "severity": "WARNING",
+        "message": "durable_object_namespace binding \"LeeAgent\" exposed on custom route lee.coey.dev/*"
+      }
+    ]
+  },
+  "exposure": {
+    "isPublic": true,
+    "surface": "custom route lee.coey.dev/*",
+    "reason": "custom route lee.coey.dev/*",
+    "criticalMessage": "Worker is attached to custom route lee.coey.dev/* with sensitive bindings",
+    "routes": [
+      "lee.coey.dev/*"
+    ],
+    "workersDev": false
+  },
+  "bindings": [
+    {
+      "type": "ai",
+      "name": "AI"
+    },
+    {
+      "type": "kv_namespace",
+      "name": "OAUTH_KV"
+    },
+    {
+      "type": "durable_object_namespace",
+      "name": "LeeAgent"
+    }
+  ],
+  "auth": {
+    "detected": false,
+    "partial": false,
+    "patterns": [],
+    "source": "/Users/jcoeyman/cloudflare/lee-model/src/index.ts"
+  }
+}

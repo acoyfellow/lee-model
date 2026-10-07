@@ -1,0 +1,78 @@
+{
+  "schema": "guardrail.deploy-receipt.v0",
+  "timestamp": "2026-10-07T20:29:45.136Z",
+  "command": [
+    "guardrail",
+    "receipt",
+    "./.guardrail-staged.12684.wrangler.jsonc"
+  ],
+  "configPath": "./.guardrail-staged.12684.wrangler.jsonc",
+  "git": {
+    "sha": "9208e5cfe557451dd18d007424fdbd5bdf8a39b6",
+    "dirty": true,
+    "remote": "https://github.com/acoyfellow/lee-model.git"
+  },
+  "decision": {
+    "allowed": false,
+    "findings": [
+      {
+        "severity": "CRITICAL",
+        "message": "Worker is attached to custom route lee.coey.dev/* with sensitive bindings"
+      },
+      {
+        "severity": "CRITICAL",
+        "message": "ai binding \"AI\" exposed on custom route lee.coey.dev/*"
+      },
+      {
+        "severity": "WARNING",
+        "message": "kv_namespace binding \"OAUTH_KV\" exposed on custom route lee.coey.dev/*"
+      },
+      {
+        "severity": "WARNING",
+        "message": "durable_object_namespace binding \"LeeAgent\" exposed on custom route lee.coey.dev/*"
+      },
+      {
+        "severity": "CRITICAL",
+        "message": "suspicious_var binding \"CF_OAUTH_CLIENT_ID\" exposed on custom route lee.coey.dev/*"
+      },
+      {
+        "severity": "CRITICAL",
+        "message": "\"CF_OAUTH_CLIENT_ID\" looks like a secret but is in [vars] (plaintext). Use `wrangler secret put CF_OAUTH_CLIENT_ID` instead."
+      }
+    ]
+  },
+  "exposure": {
+    "isPublic": true,
+    "surface": "custom route lee.coey.dev/*",
+    "reason": "custom route lee.coey.dev/*",
+    "criticalMessage": "Worker is attached to custom route lee.coey.dev/* with sensitive bindings",
+    "routes": [
+      "lee.coey.dev/*"
+    ],
+    "workersDev": false
+  },
+  "bindings": [
+    {
+      "type": "ai",
+      "name": "AI"
+    },
+    {
+      "type": "kv_namespace",
+      "name": "OAUTH_KV"
+    },
+    {
+      "type": "durable_object_namespace",
+      "name": "LeeAgent"
+    },
+    {
+      "type": "suspicious_var",
+      "name": "CF_OAUTH_CLIENT_ID"
+    }
+  ],
+  "auth": {
+    "detected": false,
+    "partial": false,
+    "patterns": [],
+    "source": "/Users/jcoeyman/cloudflare/lee-model/src/index.ts"
+  }
+}

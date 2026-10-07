@@ -52,13 +52,13 @@ const leeExtension = (readToken: () => Promise<string | undefined>): Extension =
 })
 
 export class LeeAgent extends Agent<LeeEnv & Cloudflare.Env> {
-  ai = createAI({ binding: this.env.AI })
+  ai = createAI({ binding: this.env.AI, id: "lee" })
   harness = new PiHarness({
     harness: ({ storage, context }) => {
       const models = createModels()
       models.setProvider(this.ai.provider)
       const registry = createRegistry()
-      registry.install(leeExtension(() => this.ctx.storage.get<string>("cloudflare-token")))
+      registry.install(leeExtension(async () => this.cloudflareToken))
       return Harness.open(storage, { models, registry }, context)
     },
     defaults: { model: this.ai(this.env.BRAIN_MODEL) }
@@ -69,8 +69,11 @@ export class LeeAgent extends Agent<LeeEnv & Cloudflare.Env> {
     this.lifecycle.use(this.harness)
   }
 
-  async setCloudflareToken(token: string) {
-    await this.ctx.storage.put("cloudflare-token", token)
+  private cloudflareToken: string | undefined
+
+  async useCloudflareToken(token: string) {
+    this.cloudflareToken = token
+    await this.ctx.storage.delete("cloudflare-token")
   }
 
   private async sessionFor(conversationKey: string) {
@@ -114,7 +117,7 @@ export class LeeAgent extends Agent<LeeEnv & Cloudflare.Env> {
           await delivered
           const finalAssistant = [...answer.messages].reverse().map(assistantOf).find((message) => message !== undefined)
           if (!cursor.emittedText) await emitMessage(cursor, finalAssistant, send)
-          if (answer.status !== "done") await send({ content: `Lee could not answer: ${answer.reason ?? "unknown"}` })
+          if (answer.status !== "done") await send({ content: `Lee could not answer: ${answer.reason ?? "unknown"} ${finalAssistant?.errorMessage ?? ""}` })
           await finish()
         },
         (error: unknown) => send({ content: `Lee failed: ${String(error)}` }).then(finish)
@@ -126,7 +129,7 @@ export class LeeAgent extends Agent<LeeEnv & Cloudflare.Env> {
   async ask(conversationKey: string, prompt: string) {
     const session = await this.sessionFor(conversationKey)
     const answer = await session.prompt(prompt)
-    return { status: answer.status, text: answer.text ?? "", reason: answer.reason ?? "" }
+    return { status: answer.status, text: answer.text ?? "", reason: `${answer.reason ?? ""} ${[...answer.messages].reverse().map(assistantOf).find((message) => message !== undefined)?.errorMessage ?? ""}` }
   }
 }
 

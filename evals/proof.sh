@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
+[ "${1:-}" = "--prod" ] && exec ./evals/proof-prod.sh
 base=${LEE_URL:-https://localhost:8799}
 local_cert=$(mktemp)
 openssl s_client -connect "${base#https://}" -servername localhost </dev/null 2>/dev/null | openssl x509 > "$local_cert" || true
