@@ -1,0 +1,68 @@
+{
+  "schema": "guardrail.deploy-receipt.v0",
+  "timestamp": "2026-10-07T20:33:32.819Z",
+  "command": [
+    "guardrail",
+    "receipt",
+    "./.guardrail-staged.25627.wrangler.jsonc"
+  ],
+  "configPath": "./.guardrail-staged.25627.wrangler.jsonc",
+  "git": {
+    "sha": "9208e5cfe557451dd18d007424fdbd5bdf8a39b6",
+    "dirty": true,
+    "remote": "https://github.com/acoyfellow/lee-model.git"
+  },
+  "decision": {
+    "allowed": true,
+    "findings": [
+      {
+        "severity": "WARNING",
+        "message": "custom route lee.coey.dev/* with sensitive bindings, but code enforces auth (authorization-header). Verify auth is active in production."
+      },
+      {
+        "severity": "WARNING",
+        "message": "ai binding \"AI\" on custom route lee.coey.dev/* — protected by code auth"
+      },
+      {
+        "severity": "WARNING",
+        "message": "kv_namespace binding \"OAUTH_KV\" on custom route lee.coey.dev/* — protected by code auth"
+      },
+      {
+        "severity": "WARNING",
+        "message": "durable_object_namespace binding \"LeeAgent\" on custom route lee.coey.dev/* — protected by code auth"
+      }
+    ]
+  },
+  "exposure": {
+    "isPublic": true,
+    "surface": "custom route lee.coey.dev/*",
+    "reason": "custom route lee.coey.dev/*",
+    "criticalMessage": "Worker is attached to custom route lee.coey.dev/* with sensitive bindings",
+    "routes": [
+      "lee.coey.dev/*"
+    ],
+    "workersDev": false
+  },
+  "bindings": [
+    {
+      "type": "ai",
+      "name": "AI"
+    },
+    {
+      "type": "kv_namespace",
+      "name": "OAUTH_KV"
+    },
+    {
+      "type": "durable_object_namespace",
+      "name": "LeeAgent"
+    }
+  ],
+  "auth": {
+    "detected": true,
+    "partial": false,
+    "patterns": [
+      "authorization-header"
+    ],
+    "source": "/Users/jcoeyman/cloudflare/lee-model/src/index.ts"
+  }
+}
