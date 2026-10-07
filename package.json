@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "./scripts-dev.sh",
-    "check": "tsc -p ."
+    "check": "tsc -p .",
+    "proof": "./evals/proof.sh"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +15,11 @@
   "type": "module",
   "private": "true",
   "dependencies": {
+    "@cloudflare/workers-oauth-provider": "^1.2.3",
+    "@earendil-works/pi-ai": "^1.0.4",
+    "@earendil-works/pi-durable": "^1.0.4",
     "@effect/ai-openai-compat": "^4.0.1",
+    "agents": "^0.27.0",
     "effect": "^4.0.1"
   },
   "devDependencies": {

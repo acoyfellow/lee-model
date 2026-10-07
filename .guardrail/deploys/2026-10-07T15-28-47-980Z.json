@@ -1,0 +1,47 @@
+{
+  "schema": "guardrail.deploy-receipt.v0",
+  "timestamp": "2026-10-07T15:28:47.980Z",
+  "command": [
+    "guardrail",
+    "receipt",
+    "./.guardrail-staged.58367.wrangler.jsonc"
+  ],
+  "configPath": "./.guardrail-staged.58367.wrangler.jsonc",
+  "git": {
+    "sha": "b33f11448a3f24db7efa6f48a927c7250cdaec7c",
+    "dirty": true,
+    "remote": "https://github.com/acoyfellow/lee-model.git"
+  },
+  "decision": {
+    "allowed": true,
+    "findings": []
+  },
+  "exposure": {
+    "isPublic": false,
+    "surface": "no public surface",
+    "reason": "",
+    "criticalMessage": "",
+    "routes": [],
+    "workersDev": false
+  },
+  "bindings": [
+    {
+      "type": "ai",
+      "name": "AI"
+    },
+    {
+      "type": "kv_namespace",
+      "name": "OAUTH_KV"
+    },
+    {
+      "type": "durable_object_namespace",
+      "name": "LeeAgent"
+    }
+  ],
+  "auth": {
+    "detected": false,
+    "partial": false,
+    "patterns": [],
+    "source": "/Users/jcoeyman/cloudflare/lee-model/src/index.ts"
+  }
+}
