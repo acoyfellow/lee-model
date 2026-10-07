@@ -43,14 +43,6 @@ const completion = (text: string) => ({
   choices: [{ index: 0, finish_reason: "stop", message: { role: "assistant", content: text } }]
 })
 
-const streamOf = (text: string) => {
-  const id = `chatcmpl-${crypto.randomUUID()}`
-  const chunk = (delta: object, finish: string | null) =>
-    `data: ${JSON.stringify({ id, object: "chat.completion.chunk", created: Math.floor(Date.now() / 1000), model: PUBLIC_MODEL_ID, choices: [{ index: 0, delta, finish_reason: finish }] })}\n\n`
-  const body = chunk({ role: "assistant", content: text }, null) + chunk({}, "stop") + "data: [DONE]\n\n"
-  return new Response(body, { headers: { "content-type": "text/event-stream", "cache-control": "no-cache" } })
-}
-
 const answerChat = (request: Request, env: Env, props: LeeProps) =>
   Effect.gen(function* () {
     const body = yield* Effect.promise(() => request.json().catch(() => null))
@@ -58,9 +50,13 @@ const answerChat = (request: Request, env: Env, props: LeeProps) =>
     const session = yield* sessionKey(chat.messages)
     const agent = yield* Effect.promise(() => getAgentByName(env.LeeAgent, props.userId))
     yield* Effect.promise(() => agent.setCloudflareToken(props.cloudflareToken))
+    if (chat.stream) {
+      const events = yield* Effect.promise(() => agent.streamAnswer(session, latestUserText(chat.messages), PUBLIC_MODEL_ID))
+      return new Response(events, { headers: { "content-type": "text/event-stream", "cache-control": "no-cache" } })
+    }
     const answer = yield* Effect.promise(() => agent.ask(session, latestUserText(chat.messages)))
     const text = answer.status === "done" ? answer.text : `Lee could not answer: ${answer.reason}`
-    return chat.stream ? streamOf(text) : json(completion(text))
+    return json(completion(text))
   }).pipe(Effect.catchTag("SchemaError", () => Effect.succeed(json({ error: { message: "invalid chat completion request" } }, 400))))
 
 const leeApi = {
