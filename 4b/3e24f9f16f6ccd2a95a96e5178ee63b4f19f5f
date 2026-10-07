@@ -1,0 +1,41 @@
+.guardrail/deploys/2026-10-07T20-29-45-136Z.json
+  s_6784fb7afda1e6::t_27d15fbe9dd098 1-78
+.guardrail/deploys/2026-10-07T20-30-26-131Z.json
+  s_6784fb7afda1e6::t_3bba34f4131628 1-66
+.guardrail/deploys/2026-10-07T20-32-51-462Z.json
+  s_6784fb7afda1e6::t_6a2972075c1118 1-68
+.guardrail/deploys/2026-10-07T20-33-05-057Z.json
+  s_6784fb7afda1e6::t_e6fd6081d8e42c 1-68
+.guardrail/deploys/2026-10-07T20-33-12-399Z.json
+  s_6784fb7afda1e6::t_0f5ca359e78cb0 1-68
+evals/proof-prod.sh
+  s_6784fb7afda1e6::t_be45c8f52de574 1-44
+evals/proof.sh
+  s_6784fb7afda1e6::t_7d6a98a6d71d57 4
+extensions/pi-cloudflare-lee/index.ts
+  s_6784fb7afda1e6::t_2f81e640b84de9 5
+src/consent.ts
+  s_6784fb7afda1e6::t_7c9530bdf5eb7b 8,16-17
+src/index.ts
+  s_6784fb7afda1e6::t_dbf1c56301b79e 2,14-15,21,55,67,77-107,116-177,182-188,192-193,204-206
+src/lee-harness.ts
+  s_6784fb7afda1e6::t_a00bcf8f999b32 55,61,72-76,120,132
+wrangler.jsonc
+  s_6784fb7afda1e6::t_dc24389e75c348 7,9,12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4b3e24f9f16f6ccd2a95a96e5178ee63b4f19f5f",
+  "prompts": {},
+  "sessions": {
+    "s_6784fb7afda1e6": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a10baa-6597-763e-b627-841914eb8e2c",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jordan Coeyman <jcoeyman@cloudflare.com>"
+    }
+  }
+}
