@@ -1,0 +1,1 @@
+{ "compilerOptions": { "target": "es2023", "module": "esnext", "moduleResolution": "bundler", "strict": true, "exactOptionalPropertyTypes": true, "noEmit": true, "skipLibCheck": true, "types": ["@cloudflare/workers-types"], "lib": ["es2023"], "allowImportingTsExtensions": true }, "include": ["src"] }
