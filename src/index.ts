@@ -2,6 +2,7 @@ import { Effect, Schema } from "effect"
 import { AuthorizationError, OAuthError, OAuthProvider, type OAuthHelpers } from "@cloudflare/workers-oauth-provider"
 import { getAgentByName } from "agents"
 import { consentPage } from "./consent.ts"
+import { homePage } from "./home.ts"
 import { LeeAgent, type LeeEnv } from "./lee-harness.ts"
 import { ChatRequest, type WireMessage } from "./openai-wire.ts"
 
@@ -170,7 +171,7 @@ const handleAuthorize = (request: Request, env: Env) => {
   const oauth = env.OAUTH_PROVIDER
   const { pathname } = new URL(request.url)
   if (pathname === "/callback") return finishCloudflareSignIn(request, env, oauth)
-  if (pathname !== "/authorize") return Promise.resolve(new Response("Lee: an agent you can pick as a model. See github.com/acoyfellow/lee-model", { status: 200 }))
+  if (pathname !== "/authorize") return Promise.resolve(new Response(homePage(), { headers: { "content-type": "text/html; charset=utf-8" } }))
   if (request.method === "GET") return showConsent(request, oauth)
   return redirectToCloudflare(request, env, oauth)
 }
